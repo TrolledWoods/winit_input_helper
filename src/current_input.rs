@@ -11,6 +11,11 @@ use winit::keyboard::{Key, NamedKey, PhysicalKey};
 pub enum TextChar {
     Char(char),
     Back,
+    Enter,
+    Left,
+    Right,
+    Up,
+    Down,
 }
 
 #[derive(Clone)]
@@ -75,6 +80,18 @@ impl CurrentInput {
                     match logical_key {
                         Key::Named(NamedKey::Backspace) => {
                             self.text.push(TextChar::Back);
+                        }
+                        Key::Named(NamedKey::Enter) => {
+                            self.text.push(TextChar::Enter);
+                        }
+                        Key::Named(NamedKey::ArrowLeft) => {
+                            self.text.push(TextChar::Left);
+                        }
+                        Key::Named(NamedKey::ArrowRight) => {
+                            self.text.push(TextChar::Right);
+                        }
+                        Key::Named(NamedKey::ArrowDown) => {
+                            self.text.push(TextChar::Down);
                         }
                         Key::Character(ref character) => {
                             self.text.extend(character.chars().map(TextChar::Char));
