@@ -71,8 +71,15 @@ impl CurrentInput {
                     self.key_held.push(logical_key.clone());
                     self.key_actions
                         .push(KeyAction::PressedOs(logical_key.clone()));
-                    if let Key::Named(NamedKey::Backspace) = logical_key {
-                        self.text.push(TextChar::Back);
+
+                    match logical_key {
+                        Key::Named(NamedKey::Backspace) => {
+                            self.text.push(TextChar::Back);
+                        }
+                        Key::Character(ref character) => {
+                            self.text.extend(character.chars().map(TextChar::Char));
+                        }
+                        _ => {}
                     }
 
                     let physical_key = &event.physical_key;
